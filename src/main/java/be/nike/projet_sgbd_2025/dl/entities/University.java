@@ -4,6 +4,7 @@ package be.nike.projet_sgbd_2025.dl.entities;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import lombok.ToString;
 @Entity
 @Getter @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true) @ToString(callSuper = true)
 public class University extends BaseEntity {
 
