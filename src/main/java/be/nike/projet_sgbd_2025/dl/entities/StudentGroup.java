@@ -16,23 +16,27 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Entity
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter @Setter
-@SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true) @ToString(callSuper = true)
-public class Site extends BaseEntity{
+@SuperBuilder(toBuilder = true)
+public class StudentGroup extends BaseEntity{
 
-  @Column(nullable = false, unique = true)
+  @Column(nullable = false, unique = true, length = 50)
   private String name;
 
-  @ManyToOne
-  @JoinColumn(name = "university_id")
-  private University university;
+  @Column(nullable = false)
+  private int size;
 
-  public Site(UUID id, String name, University university) {
+  @ManyToOne
+  @JoinColumn(name= "base_site_id", nullable = false)
+  private Site baseSite;
+
+  public StudentGroup(UUID id, String name, int size, Site baseSite) {
     super(id);
     this.name = name;
-    this.university = university;
+    this.size = size;
+    this.baseSite = baseSite;
   }
 }

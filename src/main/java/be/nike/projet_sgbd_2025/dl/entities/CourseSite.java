@@ -1,7 +1,6 @@
 package be.nike.projet_sgbd_2025.dl.entities;
 
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -16,23 +15,24 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Entity
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter @Setter
-@SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true) @ToString(callSuper = true)
-public class Site extends BaseEntity{
-
-  @Column(nullable = false, unique = true)
-  private String name;
+@SuperBuilder(toBuilder = true)
+public class CourseSite extends BaseEntity{
 
   @ManyToOne
-  @JoinColumn(name = "university_id")
-  private University university;
+  @JoinColumn(name = "course_id", nullable = false)
+  private Course course;
 
-  public Site(UUID id, String name, University university) {
+  @ManyToOne
+  @JoinColumn(name = "site_id", nullable = false)
+  private Site site;
+
+  public CourseSite(UUID id, Course course, Site site) {
     super(id);
-    this.name = name;
-    this.university = university;
+    this.course = course;
+    this.site = site;
   }
 }

@@ -15,24 +15,33 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+
 @Entity
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter @Setter
-@SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true) @ToString(callSuper = true)
-public class Site extends BaseEntity{
+@SuperBuilder(toBuilder = true)
+public class Classroom extends BaseEntity{
 
-  @Column(nullable = false, unique = true)
+  @Column(nullable = false, unique = true, length = 50)
   private String name;
 
-  @ManyToOne
-  @JoinColumn(name = "university_id")
-  private University university;
+  @Column(nullable = false, unique = true, length = 20)
+  private String matricule;
 
-  public Site(UUID id, String name, University university) {
+  @ManyToOne
+  @JoinColumn(name = "site_id", nullable = false)
+  private Site site;
+
+  @Column(nullable = false)
+  private int capacity;
+
+  public Classroom(UUID id, String name, String matricule, Site site, int capacity) {
     super(id);
     this.name = name;
-    this.university = university;
+    this.matricule = matricule;
+    this.site = site;
+    this.capacity = capacity;
   }
 }

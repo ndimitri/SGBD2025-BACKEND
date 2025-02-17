@@ -1,8 +1,8 @@
 package be.nike.projet_sgbd_2025.api.controllers;
 
 
-import be.nike.projet_sgbd_2025.bll.services.UniversityService;
-import be.nike.projet_sgbd_2025.dl.entities.University;
+import be.nike.projet_sgbd_2025.bll.services.StudentGroupService;
+import be.nike.projet_sgbd_2025.dl.entities.StudentGroup;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,20 +12,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/universities")
+@RequestMapping("/groups")
 @RequiredArgsConstructor
 @CrossOrigin("*")
-public class UniversityController {
+public class StudentGroupController {
 
-  private final UniversityService universityService;
-
+  private final StudentGroupService studentGroupService;
 
   @GetMapping
-  public ResponseEntity<List<University>> findAll() {
+  public ResponseEntity<List<StudentGroup>> findAll() {
+    List<StudentGroup> studentGroups = studentGroupService.findAll();
 
-    List<University> universities = universityService.findAll();
-
-    return ResponseEntity.ok(universities);
+    return ResponseEntity.ok(studentGroups);
   }
 
 
