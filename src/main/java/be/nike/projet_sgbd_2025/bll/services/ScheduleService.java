@@ -1,17 +1,15 @@
 package be.nike.projet_sgbd_2025.bll.services;
 
-import be.nike.projet_sgbd_2025.dl.entities.Schedule;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDate;
 import java.util.UUID;
 
+
 public interface ScheduleService {
-  List<Schedule> findAll();
 
-  Optional<Schedule> findById(UUID id);
+  public void generateWeeklyScheduleForGroup(UUID groupId, LocalDate startDate);
 
-  Schedule create(Schedule schedule);
+  public void generateWeeklyScheduleForAllGroups(LocalDate startDate);
 
-  List<Schedule> getScheduleByGroup(UUID groupId);
+  public void generateScheduleForYear(LocalDate startDate, LocalDate endDate);
 
 }

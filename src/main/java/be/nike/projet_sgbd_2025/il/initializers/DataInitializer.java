@@ -5,7 +5,7 @@ import be.nike.projet_sgbd_2025.dal.repositories.ClassroomRepository;
 import be.nike.projet_sgbd_2025.dal.repositories.CourseRepository;
 import be.nike.projet_sgbd_2025.dal.repositories.CourseSiteRepository;
 import be.nike.projet_sgbd_2025.dal.repositories.EquipmentRepository;
-import be.nike.projet_sgbd_2025.dal.repositories.ScheduleRepository;
+import be.nike.projet_sgbd_2025.dal.repositories.TimeSlotRepository;
 import be.nike.projet_sgbd_2025.dal.repositories.SiteRepository;
 import be.nike.projet_sgbd_2025.dal.repositories.StudentGroupRepository;
 import be.nike.projet_sgbd_2025.dal.repositories.UniversityRepository;
@@ -14,13 +14,13 @@ import be.nike.projet_sgbd_2025.dl.entities.ClassroomEquipment;
 import be.nike.projet_sgbd_2025.dl.entities.Course;
 import be.nike.projet_sgbd_2025.dl.entities.CourseSite;
 import be.nike.projet_sgbd_2025.dl.entities.Equipment;
-import be.nike.projet_sgbd_2025.dl.entities.Schedule;
+import be.nike.projet_sgbd_2025.dl.entities.TimeSlot;
 import be.nike.projet_sgbd_2025.dl.entities.Site;
 import be.nike.projet_sgbd_2025.dl.entities.StudentGroup;
 import be.nike.projet_sgbd_2025.dl.entities.University;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -39,7 +39,7 @@ public class DataInitializer implements CommandLineRunner {
   private final CourseSiteRepository courseSiteRepository;
   private final EquipmentRepository equipmentRepository;
   private final ClassroomEquipmentRepository classroomEquipmentRepository;
-  private final ScheduleRepository scheduleRepository;
+  private final TimeSlotRepository timeSlotRepository;
 
 
   @Override
@@ -85,39 +85,6 @@ public class DataInitializer implements CommandLineRunner {
     ClassroomEquipment ce2 = ClassroomEquipment.builder().classroom(c2).equipment(eq2).id(UUID.randomUUID()).build();
     classroomEquipmentRepository.saveAll(Arrays.asList(ce1, ce2));
 
-    // Initialiser les horaires
-    Schedule sch1 = Schedule.builder()
-        .course(course1)
-        .group(g1)
-        .site(s1)
-        .classroom(c1)
-        .startTime(LocalDateTime.of(2023, 10, 1, 9, 0))
-        .endTime(LocalDateTime.of(2023, 10, 1, 10, 0))
-        .id(UUID.randomUUID())
-        .build();
-
-    Schedule sch3 = Schedule.builder()
-        .course(course1)
-        .group(g1)
-        .site(s2)
-        .classroom(c2)
-        .startTime(LocalDateTime.of(2023, 10, 1, 14, 0))
-        .endTime(LocalDateTime.of(2023, 10, 1, 15, 0))
-        .id(UUID.randomUUID())
-        .build();
-
-
-    Schedule sch2 = Schedule.builder()
-        .course(course2)
-        .group(g2)
-        .site(s2)
-        .classroom(c2)
-        .startTime(LocalDateTime.of(2023, 10, 1, 13, 0))
-        .endTime(LocalDateTime.of(2023, 10, 1, 14, 0))
-        .id(UUID.randomUUID())
-        .build();
-
-    scheduleRepository.saveAll(Arrays.asList(sch1, sch2, sch3));
 
 
   }

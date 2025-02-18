@@ -3,11 +3,13 @@ package be.nike.projet_sgbd_2025.dl.entities;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,15 +23,19 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true) @ToString(callSuper = true)
 @SuperBuilder(toBuilder = true)
-public class Schedule extends BaseEntity {
+public class TimeSlot extends BaseEntity {
 
   @ManyToOne
   @JoinColumn(name = "course_id", nullable = false)
   private Course course;
 
-  @ManyToOne
-  @JoinColumn(name = "group_id", nullable = false)
-  private StudentGroup group;
+  @ManyToMany
+  @JoinTable(
+      name = "time_slot_student_group",
+      joinColumns = @JoinColumn(name = "time_slot_id"),
+      inverseJoinColumns = @JoinColumn(name = "student_group_id")
+  )
+  private Set<StudentGroup> groups;
 
   @ManyToOne
   @JoinColumn(name = "classroom_id", nullable = false)
@@ -45,11 +51,11 @@ public class Schedule extends BaseEntity {
   @Column(nullable = false)
   private LocalDateTime endTime;
 
-  public Schedule(UUID id, Course course, StudentGroup group, Classroom classroom,
+  public TimeSlot(UUID id, Course course, Set<StudentGroup> groups, Classroom classroom,
       Site site, LocalDateTime startDateTime, LocalDateTime endTime) {
     super(id);
     this.course = course;
-    this.group = group;
+    this.groups = groups;
     this.classroom = classroom;
     this.site = site;
     this.startTime = startDateTime;
