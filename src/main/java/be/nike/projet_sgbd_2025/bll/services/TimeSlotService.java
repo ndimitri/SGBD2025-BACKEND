@@ -14,4 +14,6 @@ public interface TimeSlotService {
 
   List<TimeSlot> getScheduleByGroup(UUID groupId);
 
+  void update(TimeSlot timeSlot);
+
 }

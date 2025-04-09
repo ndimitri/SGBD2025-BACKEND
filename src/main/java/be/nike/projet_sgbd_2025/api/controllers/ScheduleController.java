@@ -30,8 +30,10 @@ public class ScheduleController {
   }
 
   @PostMapping("/generate/year")
-  public void generateScheduleForYear(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate) {
-    scheduleService.generateScheduleForYear(startDate, endDate);
+  public void generateScheduleForYear(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate, @RequestParam UUID groupId) {
+    scheduleService.generateScheduleForYear(groupId, startDate, endDate);
   }
+
+
 
 }

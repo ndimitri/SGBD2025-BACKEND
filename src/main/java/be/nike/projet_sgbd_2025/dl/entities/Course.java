@@ -26,9 +26,13 @@ public class Course extends BaseEntity{
   @Column(nullable = false, length = 50)
   private String professor;
 
-  public Course(UUID id, String name, String professor) {
+  @Column(nullable = false)
+  private int weeklyHours; // Ajout du nombre d'heures par semaine
+
+  public Course(UUID id, String name, String professor, int weeklyHours) {
     super(id);
     this.name = name;
     this.professor = professor;
+    this.weeklyHours = weeklyHours;
   }
 }

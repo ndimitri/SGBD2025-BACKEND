@@ -33,8 +33,7 @@ public class TimeSlot extends BaseEntity {
   @JoinTable(
       name = "time_slot_student_group",
       joinColumns = @JoinColumn(name = "time_slot_id"),
-      inverseJoinColumns = @JoinColumn(name = "student_group_id")
-  )
+      inverseJoinColumns = @JoinColumn(name = "student_group_id"))
   private Set<StudentGroup> groups;
 
   @ManyToOne
@@ -59,6 +58,12 @@ public class TimeSlot extends BaseEntity {
     this.classroom = classroom;
     this.site = site;
     this.startTime = startDateTime;
+    this.endTime = endTime;
+  }
+
+  public TimeSlot(UUID id, LocalDateTime startTime, LocalDateTime endTime) {
+    super(id);
+    this.startTime = startTime;
     this.endTime = endTime;
   }
 }

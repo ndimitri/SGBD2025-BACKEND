@@ -76,25 +76,25 @@ public class DataInitializer implements CommandLineRunner {
     studentGroupRepository.saveAll(Arrays.asList(g1, g2, g3, g4));
 
     // Initialiser les cours
-    Course course1 = Course.builder().name("Mathématiques").professor("P.Koelberg").id(UUID.randomUUID()).build();
-    Course course2 = Course.builder().name("Informatique").professor("M.Lipohuola").id(UUID.randomUUID()).build();
-    Course course3 = Course.builder().name("Histoire").professor("F.Duromas").id(UUID.randomUUID()).build();
-    Course course4 = Course.builder().name("Biologie").professor("T.Pochet").id(UUID.randomUUID()).build();
-    Course course5 = Course.builder().name("Politique").professor("L.Crizwich").id(UUID.randomUUID()).build();
-    Course course6 = Course.builder().name("Anglais").professor("S.Brano").id(UUID.randomUUID()).build();
-    Course course7 = Course.builder().name("Physique").professor("N.Colas").id(UUID.randomUUID()).build();
-    Course course8 = Course.builder().name("Chimie").professor("K.Smet").id(UUID.randomUUID()).build();
+    Course course1 = Course.builder().name("Mathématiques").professor("P.Koelberg").weeklyHours(4).id(UUID.randomUUID()).build();
+    Course course2 = Course.builder().name("Informatique").professor("M.Lipohuola").weeklyHours(5).id(UUID.randomUUID()).build();
+    Course course3 = Course.builder().name("Histoire").professor("F.Duromas").weeklyHours(3).id(UUID.randomUUID()).build();
+    Course course4 = Course.builder().name("Biologie").professor("T.Pochet").weeklyHours(3).id(UUID.randomUUID()).build();
+    Course course5 = Course.builder().name("Politique").professor("L.Crizwich").weeklyHours(2).id(UUID.randomUUID()).build();
+    Course course6 = Course.builder().name("Anglais").professor("S.Brano").weeklyHours(4).id(UUID.randomUUID()).build();
+    Course course7 = Course.builder().name("Physique").professor("N.Colas").weeklyHours(3).id(UUID.randomUUID()).build();
+    Course course8 = Course.builder().name("Chimie").professor("K.Smet").weeklyHours(3).id(UUID.randomUUID()).build();
     courseRepository.saveAll(Arrays.asList(course1, course2, course3, course4, course5, course6, course7, course8));
 
     // Initialiser les relations cours-site
     CourseSite cs1 = CourseSite.builder().course(course1).site(s1).id(UUID.randomUUID()).build();
     CourseSite cs2 = CourseSite.builder().course(course2).site(s1).id(UUID.randomUUID()).build();
-    CourseSite cs3 = CourseSite.builder().course(course3).site(s2).id(UUID.randomUUID()).build();
-    CourseSite cs4 = CourseSite.builder().course(course4).site(s2).id(UUID.randomUUID()).build();
-    CourseSite cs5 = CourseSite.builder().course(course5).site(s3).id(UUID.randomUUID()).build();
-    CourseSite cs6 = CourseSite.builder().course(course6).site(s3).id(UUID.randomUUID()).build();
-    CourseSite cs7 = CourseSite.builder().course(course7).site(s4).id(UUID.randomUUID()).build();
-    CourseSite cs8 = CourseSite.builder().course(course8).site(s4).id(UUID.randomUUID()).build();
+    CourseSite cs3 = CourseSite.builder().course(course3).site(s1).id(UUID.randomUUID()).build();
+    CourseSite cs4 = CourseSite.builder().course(course4).site(s1).id(UUID.randomUUID()).build();
+    CourseSite cs5 = CourseSite.builder().course(course5).site(s2).id(UUID.randomUUID()).build();
+    CourseSite cs6 = CourseSite.builder().course(course6).site(s2).id(UUID.randomUUID()).build();
+    CourseSite cs7 = CourseSite.builder().course(course7).site(s2).id(UUID.randomUUID()).build();
+    CourseSite cs8 = CourseSite.builder().course(course8).site(s2).id(UUID.randomUUID()).build();
     courseSiteRepository.saveAll(Arrays.asList(cs1, cs2, cs3, cs4, cs5, cs6, cs7, cs8));
 
     // Initialiser le matériel audiovisuel

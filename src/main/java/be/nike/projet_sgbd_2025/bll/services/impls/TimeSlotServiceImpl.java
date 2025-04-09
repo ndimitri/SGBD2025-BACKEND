@@ -34,4 +34,26 @@ public class TimeSlotServiceImpl implements TimeSlotService {
   public List<TimeSlot> getScheduleByGroup(UUID groupId) {
     return timeSlotRepository.findByGroups_Id(groupId);
   }
+
+  @Override
+  public void update(TimeSlot timeSlot) {
+
+    TimeSlot existingTimeSlot = timeSlotRepository.findById(timeSlot.getId()).orElseThrow(() -> new RuntimeException("TimeSlot not found"));
+
+    if(existingTimeSlot != null) {
+      existingTimeSlot.setStartTime(timeSlot.getStartTime());
+      existingTimeSlot.setEndTime(timeSlot.getEndTime());
+      existingTimeSlot.setClassroom(timeSlot.getClassroom());
+
+      existingTimeSlot.getCourse().setProfessor(timeSlot.getCourse().getProfessor());
+      existingTimeSlot.setCourse(timeSlot.getCourse());
+      existingTimeSlot.setSite(timeSlot.getSite());
+      existingTimeSlot.setGroups(timeSlot.getGroups());
+
+      timeSlotRepository.save(existingTimeSlot);
+    } else {
+      throw new RuntimeException("TimeSlot not found");
+    }
+
+  }
 }

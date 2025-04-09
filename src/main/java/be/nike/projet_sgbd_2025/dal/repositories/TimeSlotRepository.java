@@ -20,7 +20,14 @@ public interface TimeSlotRepository extends JpaRepository<TimeSlot, UUID> {
   @Query("SELECT t FROM TimeSlot t WHERE t.classroom.id = :classroomId AND t.startTime < :endTime AND t.endTime > :startTime")
   List<TimeSlot> findByClassroomAndTimeRange(@Param("classroomId") UUID classroomId, @Param("startTime") LocalDateTime startTime, @Param("endTime") LocalDateTime endTime);
 
-  @Query("SELECT t FROM TimeSlot t JOIN t.groups sg WHERE sg.id = :groupId AND t.endTime < :startTime ORDER BY t.endTime DESC")
+//  @Query("SELECT t FROM TimeSlot t JOIN t.groups sg WHERE sg.id = :groupId AND t.endTime < :startTime ORDER BY t.endTime DESC")
+//  List<TimeSlot> findByStudentGroupAndEndTimeBefore(@Param("groupId") UUID groupId, @Param("startTime") LocalDateTime startTime);
+
+  @Query("SELECT t FROM TimeSlot t JOIN t.groups sg WHERE sg.id = :groupId AND t.endTime <= :startTime ORDER BY t.endTime DESC")
   List<TimeSlot> findByStudentGroupAndEndTimeBefore(@Param("groupId") UUID groupId, @Param("startTime") LocalDateTime startTime);
+
+  @Query("SELECT t FROM TimeSlot t JOIN t.groups sg WHERE sg.id = :groupId AND t.startTime >= :startTime ORDER BY t.startTime ASC")
+  List<TimeSlot> findNextTimeSlot(@Param("groupId") UUID groupId, @Param("startTime") LocalDateTime startTime);
+
 
 }
