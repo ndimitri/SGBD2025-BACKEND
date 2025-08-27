@@ -3,6 +3,7 @@ package be.nike.projet_sgbd_2025.bll.services.impls;
 import be.nike.projet_sgbd_2025.bll.services.TimeSlotService;
 import be.nike.projet_sgbd_2025.dal.repositories.TimeSlotRepository;
 import be.nike.projet_sgbd_2025.dl.entities.TimeSlot;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -44,11 +45,12 @@ public class TimeSlotServiceImpl implements TimeSlotService {
       existingTimeSlot.setStartTime(timeSlot.getStartTime());
       existingTimeSlot.setEndTime(timeSlot.getEndTime());
       existingTimeSlot.setClassroom(timeSlot.getClassroom());
-
-      existingTimeSlot.getCourse().setProfessor(timeSlot.getCourse().getProfessor());
+  //TODO Pk on modifie le professeur du cours alors qu'on set le cours complet juste après ?
+//      existingTimeSlot.getCourse().setProfessor(timeSlot.getCourse().getProfessor());
       existingTimeSlot.setCourse(timeSlot.getCourse());
       existingTimeSlot.setSite(timeSlot.getSite());
-      existingTimeSlot.setGroups(timeSlot.getGroups());
+//      existingTimeSlot.setGroups(timeSlot.getGroups());
+      existingTimeSlot.setGroups(new HashSet<>(timeSlot.getGroups()));
 
       timeSlotRepository.save(existingTimeSlot);
     } else {

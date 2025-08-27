@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/groups")
 @RequiredArgsConstructor
-@CrossOrigin("*")
 public class StudentGroupController {
 
   private final StudentGroupService studentGroupService;

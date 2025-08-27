@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/universities")
 @RequiredArgsConstructor
-@CrossOrigin("*")
 public class UniversityController {
 
   private final UniversityService universityService;

@@ -2,10 +2,12 @@ package be.nike.projet_sgbd_2025.api.controllers;
 
 import be.nike.projet_sgbd_2025.api.forms.TimeSlotForm;
 import be.nike.projet_sgbd_2025.bll.services.ClassroomService;
+import be.nike.projet_sgbd_2025.bll.services.CourseService;
 import be.nike.projet_sgbd_2025.bll.services.ScheduleService;
 import be.nike.projet_sgbd_2025.bll.services.StudentGroupService;
 import be.nike.projet_sgbd_2025.bll.services.TimeSlotService;
 import be.nike.projet_sgbd_2025.dl.entities.Classroom;
+import be.nike.projet_sgbd_2025.dl.entities.Course;
 import be.nike.projet_sgbd_2025.dl.entities.Site;
 import be.nike.projet_sgbd_2025.dl.entities.StudentGroup;
 import be.nike.projet_sgbd_2025.dl.entities.TimeSlot;
@@ -31,13 +33,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/timeslots")
 @RequiredArgsConstructor
-@CrossOrigin("*")
 public class TimeSlotController {
 
   private final TimeSlotService timeSlotService;
   private final ScheduleService scheduleService;
   private final ClassroomService classroomService;
   private final StudentGroupService studentGroupService;
+  private final CourseService courseService;
 
   @GetMapping
   public ResponseEntity<List<TimeSlot>> findAll() {
@@ -68,22 +70,33 @@ public class TimeSlotController {
   }
 
 
-  @PutMapping("")
-  public ResponseEntity<?> updateTimeSlot( @Valid @RequestBody TimeSlotForm updatedSlot, BindingResult bindingResult) {
+  @PutMapping("/{id}")
+  public ResponseEntity<?> updateTimeSlot( @PathVariable UUID id, @Valid @RequestBody TimeSlotForm updatedSlot, BindingResult bindingResult) {
+
     if(bindingResult.hasErrors()){
-      List<String> errors = bindingResult.getAllErrors().stream().map(
-          DefaultMessageSourceResolvable::getDefaultMessage).toList();
+      List<String> errors = bindingResult.getAllErrors().stream()
+          .map(DefaultMessageSourceResolvable::getDefaultMessage)
+          .toList();
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
 
+    System.out.println("Updated Slot: " + updatedSlot.toString());
+
     TimeSlot timeSlot = updatedSlot.toTimeSlot();
-    StudentGroup groupToAdd = studentGroupService.findById(updatedSlot.id()).orElseThrow();
-    timeSlot.setGroups(Set.of(groupToAdd));
+
+    List<StudentGroup> groupToAdd = updatedSlot.studentGroupsIds().stream()
+        .map(uuid -> studentGroupService.findById(uuid).orElseThrow())
+        .toList();
+    timeSlot.setGroups(Set.copyOf(groupToAdd));
 
     Classroom classroomToAdd = classroomService.findById(updatedSlot.classroomId()).orElseThrow();
     timeSlot.setClassroom(classroomToAdd);
 
     Site siteToAdd = classroomToAdd.getSite();
     timeSlot.setSite(siteToAdd);
+
+    Course courseToAdd = courseService.findById(updatedSlot.courseId()).orElseThrow();
+    timeSlot.setCourse(courseToAdd);
 
     timeSlotService.update(timeSlot);
 

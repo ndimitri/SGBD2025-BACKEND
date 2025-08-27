@@ -7,6 +7,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -34,7 +35,7 @@ public class TimeSlot extends BaseEntity {
       name = "time_slot_student_group",
       joinColumns = @JoinColumn(name = "time_slot_id"),
       inverseJoinColumns = @JoinColumn(name = "student_group_id"))
-  private Set<StudentGroup> groups;
+  private Set<StudentGroup> groups = new HashSet<>();
 
   @ManyToOne
   @JoinColumn(name = "classroom_id", nullable = false)
