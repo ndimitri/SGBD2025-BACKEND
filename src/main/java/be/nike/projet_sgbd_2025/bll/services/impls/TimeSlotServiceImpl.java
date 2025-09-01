@@ -3,6 +3,7 @@ package be.nike.projet_sgbd_2025.bll.services.impls;
 import be.nike.projet_sgbd_2025.bll.services.TimeSlotService;
 import be.nike.projet_sgbd_2025.dal.repositories.TimeSlotRepository;
 import be.nike.projet_sgbd_2025.dl.entities.TimeSlot;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -42,6 +43,20 @@ public class TimeSlotServiceImpl implements TimeSlotService {
     TimeSlot existingTimeSlot = timeSlotRepository.findById(timeSlot.getId()).orElseThrow(() -> new RuntimeException("TimeSlot not found"));
 
     if(existingTimeSlot != null) {
+
+      LocalDateTime now = LocalDateTime.now();
+
+      // Vérification que start < end
+      if (!timeSlot.getStartTime().isBefore(timeSlot.getEndTime())) {
+        throw new IllegalArgumentException("L'heure de début doit être avant l'heure de fin.");
+      }
+
+      // Vérification que start est dans le futur
+      if (!timeSlot.getStartTime().isAfter(now)) {
+        throw new IllegalArgumentException("Impossible de modifier un cours déjà passé.");
+      }
+
+
       existingTimeSlot.setStartTime(timeSlot.getStartTime());
       existingTimeSlot.setEndTime(timeSlot.getEndTime());
       existingTimeSlot.setClassroom(timeSlot.getClassroom());
